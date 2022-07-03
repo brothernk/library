@@ -1,0 +1,83 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/library-uii/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/library-uii",
+        "index": "apps/library-uii/src/index.html",
+        "baseHref": "/",
+        "main": "apps/library-uii/src/main.tsx",
+        "polyfills": "apps/library-uii/src/polyfills.ts",
+        "tsConfig": "apps/library-uii/tsconfig.app.json",
+        "assets": [
+          "apps/library-uii/src/favicon.ico",
+          "apps/library-uii/src/assets"
+        ],
+        "styles": ["apps/library-uii/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/library-uii/src/environments/environment.ts",
+              "with": "apps/library-uii/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "library-uii:build",
+        "hmr": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "library-uii:build:development"
+        },
+        "production": {
+          "buildTarget": "library-uii:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/library-uii/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/library-uii"],
+      "options": {
+        "jestConfig": "apps/library-uii/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
